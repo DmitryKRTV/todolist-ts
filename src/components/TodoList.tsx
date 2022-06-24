@@ -1,8 +1,11 @@
-import React, {useState} from 'react';
+import React from 'react';
+import {FilterValuesType} from "../App";
 
 type TodoListPropsType = {
     title: string
     tasks: Array<TaskType>
+    removeTask: (id: number) => void
+    changeFilter: (value: FilterValuesType) => void
 }
 
 export type TaskType = {
@@ -11,52 +14,36 @@ export type TaskType = {
     isDone: boolean
 }
 
+
 const TodoList = (props: TodoListPropsType) => {
 
-    const initialValue = ["Help grandpa"]
-
-    const [events, setEvents] = useState(initialValue);
-
-    const [value, setValue] = useState('');
-
-    const saveTodo = (value: any) => {
-        setEvents([...events, value]);
-    }
-
-    const deleteEvent = () => {
-
-    }
 
     return (
         <div className="App">
             <div>
                 <h3>{props.title}</h3>
-                {/*<div>*/}
-                {/*    <input value={""}/>*/}
-                {/*    <button>+</button>*/}
-                {/*</div>*/}
-                <form onSubmit={event => {
-                    event.preventDefault()
-                    saveTodo(value);
-                }}>
-                    <input value={value} onChange={e => setValue(e.currentTarget.value)}/>
-                    <button type={"submit"}>+</button>
-                </form>
-
-                {events.map((i)=><div onClick={deleteEvent}>{i}</div>)}
-
-
+                <div>
+                    <input value={""}/>
+                    <button>+</button>
+                </div>
 
                 <ul>
-                    <li><input type="checkbox" checked={props.tasks[0].isDone}/> <span>{props.tasks[0].title}</span></li>
-                    <li><input type="checkbox" checked={props.tasks[1].isDone}/> <span>{props.tasks[1].title}</span></li>
-                    <li><input type="checkbox" checked={props.tasks[2].isDone}/> <span>{props.tasks[2].title}</span></li>
+                    {props.tasks.map((i) => {
+                            return (
+                                    <li><input type="checkbox" checked={i.isDone}/>
+                                    <span>{i.title}</span>
+                                    <button onClick={()=>{
+                                        props.removeTask(i.id)
+                                    }}>X</button></li>
+                            )
+                        }
+                    )}
                 </ul>
 
                 <div>
-                    <button>All</button>
-                    <button>Active</button>
-                    <button>Completed</button>
+                    <button onClick={()=>{props.changeFilter("all")}}>All</button>
+                    <button onClick={()=>{props.changeFilter("active")}}>Active</button>
+                    <button onClick={()=>{props.changeFilter("completed")}}>Completed</button>
                 </div>
             </div>
         </div>

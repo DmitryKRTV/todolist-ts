@@ -5,10 +5,10 @@ type TodoListPropsType = {
     id: string
     title: string
     tasks: Array<TaskType>
-    removeTask: (id: string, todoListId: string) => void
-    changeFilter: (value: FilterValuesType, todoListId: string) => void
-    addTask: (title: string, todoListId: string) => void
-    changeTaskStatus: (taskId: string, isDone: boolean, todoListId: string) => void
+    removeTask: (todoListId: string, id: string) => void
+    changeFilter: (todoListId: string, value: FilterValuesType) => void
+    addTask: (todoListId: string, title: string) => void
+    changeTaskStatus: (todoListId: string, taskId: string, isDone: boolean) => void
     filter: FilterValuesType
     removeTodoList: (todoListId: string) => void
 }
@@ -29,11 +29,10 @@ const TodoList = (props: TodoListPropsType) => {
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => setNewTaskTitle(e.currentTarget.value)
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-
         setError(null)
 
         if (e.key === "Enter" && e.currentTarget.value.trim() !== "") {
-            props.addTask(newTaskTitle.trim(), props.id);
+            props.addTask(props.id, newTaskTitle.trim());
             setNewTaskTitle("")
         }
 
@@ -45,16 +44,19 @@ const TodoList = (props: TodoListPropsType) => {
 
     const addTaskHandler = () => {
         if (newTaskTitle.trim() !== "") {
-            props.addTask(newTaskTitle.trim(), props.id);
+            props.addTask(props.id, newTaskTitle.trim());
             setNewTaskTitle("")
         }
-        setError("Field is required")
+        if (newTaskTitle.trim() === "") {
+            setError("Field is required")
+        }
+        
     }
 
 
     const onClickFilterHandler = (filter: FilterValuesType) => {
         return (e: MouseEvent<HTMLButtonElement>) => {
-            props.changeFilter(filter, props.id)
+            props.changeFilter(props.id, filter)
         }
     }
 
@@ -83,11 +85,11 @@ const TodoList = (props: TodoListPropsType) => {
                     {props.tasks.map((i) => {
 
                             const onRemoveHandler = () => {
-                                props.removeTask(i.id, props.id)
+                                props.removeTask(props.id, i.id)
                             }
 
                             const onBoxChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                                props.changeTaskStatus(i.id, e.currentTarget.checked, props.id)
+                                props.changeTaskStatus(props.id, i.id, e.currentTarget.checked)
                             }
 
                             return (

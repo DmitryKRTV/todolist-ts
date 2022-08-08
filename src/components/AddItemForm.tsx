@@ -40,14 +40,18 @@ const AddItemForm: React.FC<AddItemFormType> = (props) => {
     return (
         <div>
             <TextField variant={"outlined"}
-                       label={"Type value"}
+                       label={error ? "Field is required" : "Type value"}
                        value={title}
                        onChange={onChangeHandler}
                        onKeyDown={onKeyPressHandler}
                        error={!!error}
                        helperText={error}
             />
-            <IconButton onClick={addTaskHandler} color={"primary"}>
+            <IconButton onClick={addTaskHandler}
+                        color={"primary"}
+                // style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}
+                        style={{margin: "8px 0px"}}
+            >
                 <ControlPoint/>
             </IconButton>
         </div>

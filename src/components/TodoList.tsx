@@ -53,14 +53,14 @@ const TodoList = (props: TodoListPropsType) => {
     return (
         <div className="App">
             <div>
-                <h3>
+                <div>
                     <EditableSpan title={props.title}
                                   onChange={todoListTitleChanger}
                     />
                     <IconButton aria-label="delete" onClick={removeTodoListHandler}>
                         <Delete/>
                     </IconButton>
-                </h3>
+                </div>
 
                 <AddItemForm addItem={addTask}/>
 
@@ -96,13 +96,18 @@ const TodoList = (props: TodoListPropsType) => {
 
                 <div>
                     <Button variant={props.filter === "all" ? "contained" : "text"}
-                            onClick={onClickFilterHandler("all")}>All
+                            onClick={onClickFilterHandler("all")}
+                    >All
                     </Button>
-                    <Button color={"primary"} variant={props.filter === "active" ? "contained" : "text"}
-                            onClick={onClickFilterHandler("active")}>Active
+                    <Button color={"primary"}
+                            variant={props.filter === "active" ? "contained" : "text"}
+                            onClick={onClickFilterHandler("active")}
+                    >Active
                     </Button>
-                    <Button color={"secondary"} variant={props.filter === "completed" ? "contained" : "text"}
-                            onClick={onClickFilterHandler("completed")}>Completed
+                    <Button color={"secondary"}
+                            variant={props.filter === "completed" ? "contained" : "text"}
+                            onClick={onClickFilterHandler("completed")}
+                    >Completed
                     </Button>
                 </div>
             </div>

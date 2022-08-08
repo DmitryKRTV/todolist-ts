@@ -8,13 +8,13 @@ import {Menu} from "@mui/icons-material";
 
 export type FilterValuesType = "all" | "completed" | "active";
 
-type TodoListType = {
+export type TodoListType = {
     id: string
     title: string
     filter: FilterValuesType
 }
 
-type TasksStateType = {
+export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
 
@@ -120,10 +120,9 @@ function App() {
                                 newTasks = tasks[i.id];
                         }
 
-                        return <Grid item>
-                            <Paper style={{padding: "10px"}}>
+                        return <Grid item key={i.id}>
+                            <Paper style={{padding: "20px"}}>
                                 <TodoList
-                                    key={i.id}
                                     id={i.id}
                                     title={i.title}
                                     tasks={newTasks}

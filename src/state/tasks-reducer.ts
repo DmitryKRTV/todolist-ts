@@ -22,7 +22,24 @@ export type finalActionType =
     | AddTodolistActionType1
     | RemoveTodolistActionType
 
-export const tasksReducer = (state: TasksStateType, action: finalActionType): TasksStateType => {
+export const todoListId1 = v1();
+export const todoListId2 = v1();
+
+const initialState: TasksStateType = {
+    [todoListId1]: [
+        {id: v1(), title: "HTML", isDone: true},
+        {id: v1(), title: "CSS", isDone: true},
+        {id: v1(), title: "React", isDone: false},
+        {id: v1(), title: "Redux", isDone: true},
+    ],
+    [todoListId2]: [
+        {id: v1(), title: "Milk", isDone: true},
+        {id: v1(), title: "Sugar", isDone: true},
+        {id: v1(), title: "Salt", isDone: false},
+    ],
+}
+
+export const tasksReducer = (state: TasksStateType = initialState, action: finalActionType): TasksStateType => {
     switch (action.type) {
         case "REMOVE-TASK":
             return {
@@ -63,7 +80,7 @@ export const tasksReducer = (state: TasksStateType, action: finalActionType): Ta
             delete stateCopy[action.payload.todolistId];
             return stateCopy;
         default:
-            return state
+            return state;
     }
 }
 

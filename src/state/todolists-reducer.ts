@@ -22,6 +22,7 @@ const initialState: Array<TodoListType> = [
     {id: todoListId2, title: "What to buy", filter: "completed"},
 ]
 
+
 export const todolistsReducer = (state: Array<TodoListType> = initialState, action: finalActionTypes): Array<TodoListType> => {
     switch (action.type) {
         case "REMOVE-TODOLIST":

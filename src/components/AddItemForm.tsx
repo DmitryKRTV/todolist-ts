@@ -5,7 +5,8 @@ import {ControlPoint} from "@mui/icons-material";
 type AddItemFormType = {
     addItem: (title: string) => void
 }
-const AddItemForm: React.FC<AddItemFormType> = (props) => {
+const AddItemForm: React.FC<AddItemFormType> = React.memo((props) => {
+    console.log("Add item form")
 
     const {addItem} = props;
 
@@ -15,16 +16,22 @@ const AddItemForm: React.FC<AddItemFormType> = (props) => {
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.currentTarget.value)
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null)
 
-        if (e.key === "Enter" && e.currentTarget.value.trim() !== "") {
+        if (e.key === "Enter" && (title.trim() === "")) {
+            setError("Field is required")
+            return
+        }
+
+        if (error !== null) {
+            setError(null)
+        }
+
+        if (e.key === "Enter" && title.trim() !== "") {
             addItem(title.trim());
             setTitle("")
         }
 
-        if (e.key === "Enter" && e.currentTarget.value.trim() === "") {
-            setError("Field is required")
-        }
+
     }
 
     const addTaskHandler = () => {
@@ -56,6 +63,6 @@ const AddItemForm: React.FC<AddItemFormType> = (props) => {
             </IconButton>
         </div>
     );
-};
+});
 
 export default AddItemForm;

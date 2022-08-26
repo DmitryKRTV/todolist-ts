@@ -1,16 +1,23 @@
 import {v1} from "uuid";
-import {FilterValuesType, TasksStateType, TodoListType} from "../App";
+import {FilterValuesType, TodoListType} from "../App";
 import {
     addTodolistAC, changeTodolistFilterAC,
-    ChangeTodolistFilterActionType, changeTodolistTitleAC,
+    changeTodolistTitleAC,
     removeTodolistAC,
     todolistsReducer
 } from "./todolists-reducer";
 
-test("todolistsReducer should delete an element", () => {
-    const todoListId1 = v1();
-    const todoListId2 = v1();
+let todoListId1: string;
+let todoListId2: string;
 
+beforeEach(() => {
+        todoListId1 = v1();
+        todoListId2 = v1();
+    }
+)
+
+
+test("todolistsReducer should delete an element", () => {
 
     const todoLists: Array<TodoListType> = [
         {id: todoListId1, title: "What to learn", filter: "all"},
@@ -24,8 +31,6 @@ test("todolistsReducer should delete an element", () => {
 })
 
 test("todolistsReducer should add an element", () => {
-    const todoListId1 = v1();
-    const todoListId2 = v1();
 
     const newTodoListTitle = "New todolist"
 
@@ -42,8 +47,6 @@ test("todolistsReducer should add an element", () => {
 })
 
 test("correct todolist should change its name", () => {
-    const todoListId1 = v1();
-    const todoListId2 = v1();
 
     const newTodoListTitle = "New todolist"
     //
@@ -65,8 +68,6 @@ test("correct todolist should change its name", () => {
 })
 
 test("correct filter should be changed", () => {
-    const todoListId1 = v1();
-    const todoListId2 = v1();
 
     const newFilter: FilterValuesType = "all";
 

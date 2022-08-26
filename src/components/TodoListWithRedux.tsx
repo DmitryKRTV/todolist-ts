@@ -1,17 +1,18 @@
-import React, {ChangeEvent, MouseEvent} from "react";
+import React, {MouseEvent, useCallback} from "react";
 import {FilterValuesType} from "../App";
 import AddItemForm from "./AddItemForm";
 import EditableSpan from "./EditableSpan";
-import {Button, Checkbox, IconButton} from "@mui/material";
+import {Button, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../state/tasks-reducer";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {changeTodolistFilterAC} from "../state/todolists-reducer";
+import {AppRootState} from "../state/store";
+import {Task} from "./Task";
 
 type TodoListPropsType = {
     id: string
     title: string
-    tasks: Array<TaskType>
     filter: FilterValuesType
     removeTodoList: (todoListId: string) => void
     changeTodoListTitle: (todoListId: string, title: string) => void
@@ -24,29 +25,34 @@ export type TaskType = {
 }
 
 
-const TodoListWithRedux = (props: TodoListPropsType) => {
+const TodoListWithRedux = React.memo((props: TodoListPropsType) => {
 
-    const {tasks, filter} = props;
+    const {id, filter} = props;
+
+    const tasks = useSelector<AppRootState, Array<TaskType>>(state => state.tasks[id]);
+
+    console.log("Todo")
+
 
     const dispatch = useDispatch();
 
-    const onClickFilterHandler = (filter: FilterValuesType) => {
+    const onClickFilterHandler = useCallback((filter: FilterValuesType) => {
         return (e: MouseEvent<HTMLButtonElement>) => {
             dispatch(changeTodolistFilterAC(props.id, filter))
         }
-    }
+    }, [props.id, filter])
 
     const removeTodoListHandler = () => {
         props.removeTodoList(props.id)
     }
 
-    const addTask = (title: string) => {
+    const addTask = useCallback((title: string) => {
         dispatch(addTaskAC(props.id, title))
-    }
+    }, [props.id])
 
-    const todoListTitleChanger = (title: string) => {
+    const todoListTitleChanger = useCallback((title: string) => {
         props.changeTodoListTitle(props.id, title)
-    }
+    }, [props.id, props.changeTodoListTitle])
 
 
     function removeTask(todoListId: string, id: string) {
@@ -58,9 +64,9 @@ const TodoListWithRedux = (props: TodoListPropsType) => {
 
     }
 
-    const onTitleChangeHandler = (TaskId: string) => {
+    const onTitleChangeHandler = useCallback((TaskId: string) => {
         return (value: string) => dispatch(changeTaskTitleAC(props.id, TaskId, value))
-    }
+    }, [dispatch, props.id])
 
     let newTasks = tasks;
 
@@ -90,33 +96,9 @@ const TodoListWithRedux = (props: TodoListPropsType) => {
                 <AddItemForm addItem={addTask}/>
 
                 <div>
-                    {newTasks.map((i) => {
-
-                            const onRemoveHandler = () => {
-                                removeTask(props.id, i.id)
-                            }
-
-                            const onBoxChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                                changeStatus(props.id, i.id, e.currentTarget.checked)
-                            }
-
-                            return (
-                                <div className={i.isDone ? "is-done" : ""}
-                                     key={`${i.id}`}>
-                                    <Checkbox
-                                        onChange={onBoxChangeHandler}
-                                        checked={i.isDone}
-                                    />
-                                    <EditableSpan title={i.title}
-                                                  onChange={onTitleChangeHandler(i.id)}
-                                    />
-                                    <IconButton aria-label="delete" onClick={onRemoveHandler}>
-                                        <Delete/>
-                                    </IconButton>
-                                </div>
-                            )
-                        }
-                    )}
+                    {newTasks.map((i) => <Task TodolistId={props.id} onTitleChangeHandler={onTitleChangeHandler}
+                                               removeTask={removeTask} changeStatus={changeStatus} task={i}
+                                               key={i.id}/>)}
                 </div>
 
                 <div>
@@ -138,6 +120,6 @@ const TodoListWithRedux = (props: TodoListPropsType) => {
             </div>
         </div>
     );
-};
+})
 
 export default TodoListWithRedux;

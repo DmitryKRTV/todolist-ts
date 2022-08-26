@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 import "./App.css";
 import {TaskType} from "./components/TodoList";
 import AddItemForm from "./components/AddItemForm";
@@ -29,27 +29,31 @@ export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
 
+let a = 0;
+
 function AppWithRedux() {
+
+    console.log("App")
 
     const dispatch = useDispatch();
     const todoLists = useSelector<AppRootState, Array<TodoListType>>(state => state.todolists);
-    const tasks = useSelector<AppRootState, TasksStateType>(state => state.tasks);
 
-    function removeTodoList(todoListId: string) {
+
+    const removeTodoList = useCallback((todoListId: string) => {
         const action = removeTodolistAC(todoListId)
+        a++;
         dispatch(action)
-    }
+    }, [dispatch])
 
-    const addTodoList = (title: string) => {
+    const addTodoList = useCallback((title: string) => {
         const action = addTodoListAC(title)
         dispatch(action)
-    }
+    }, [dispatch])
 
 
-    function changeTodoListTitle(todoListId: string, value: string) {
+    const changeTodoListTitle = useCallback((todoListId: string, value: string) => {
         dispatch(changeTodolistTitleAC(todoListId, value))
-    }
-
+    }, [dispatch])
 
     return (
         <div className="App">
@@ -71,7 +75,6 @@ function AppWithRedux() {
                     <Button color="inherit">Login</Button>
                 </Toolbar>
             </AppBar>
-
             <Container fixed>
                 <Grid container style={{padding: "20px"}}>
                     <AddItemForm addItem={addTodoList}/>
@@ -84,7 +87,6 @@ function AppWithRedux() {
                                 <TodoListWithRedux
                                     id={i.id}
                                     title={i.title}
-                                    tasks={tasks[i.id]}
                                     filter={i.filter}
                                     removeTodoList={removeTodoList}
                                     changeTodoListTitle={changeTodoListTitle}

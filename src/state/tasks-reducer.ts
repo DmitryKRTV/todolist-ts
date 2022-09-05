@@ -1,4 +1,4 @@
-import {FilterValuesType, TasksStateType, TodoListType} from "../App";
+import {FilterValuesType, TasksStateType, TodoListType} from "../oldAdd/App";
 import {v1} from "uuid";
 
 type RemoveTaskActionType = ReturnType<typeof removeTaskAC>;

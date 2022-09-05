@@ -1,5 +1,5 @@
 import {v1} from "uuid";
-import {TasksStateType, TodoListType} from "../App";
+import {TasksStateType, TodoListType} from "../oldAdd/App";
 import {todolistsReducer} from "./todolists-reducer";
 import {
     addTaskAC,

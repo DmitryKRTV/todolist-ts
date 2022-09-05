@@ -1,7 +1,7 @@
 import React, {ChangeEvent, MouseEvent} from "react";
-import {FilterValuesType} from "../App";
-import AddItemForm from "./AddItemForm";
-import EditableSpan from "./EditableSpan";
+import {FilterValuesType} from "../oldAdd/App";
+import AddItemForm from "./AddItemForm/AddItemForm";
+import EditableSpan from "./EditableSpan/EditableSpan";
 import {Button, Checkbox, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 import {removeTaskAC} from "../state/tasks-reducer";
@@ -77,6 +77,7 @@ const TodoList = (props: TodoListPropsType) => {
                             const onBoxChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
                                 props.changeTaskStatus(props.id, i.id, e.currentTarget.checked)
                             }
+
 
                             return (
                                 <div className={i.isDone ? "is-done" : ""}

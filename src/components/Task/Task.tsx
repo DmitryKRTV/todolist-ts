@@ -1,12 +1,12 @@
 import React, {ChangeEvent, useCallback} from "react";
 import {Checkbox, IconButton} from "@mui/material";
-import EditableSpan from "./EditableSpan";
+import EditableSpan from "../EditableSpan/EditableSpan";
 import {Delete} from "@mui/icons-material";
-import {TaskType} from "./TodoListWithRedux";
+import {TaskType} from "../TodoListWithRedux";
 
 type TaskPropsType = {
     TodolistId: string
-    onTitleChangeHandler: (TaskId: string) => (value: string) => void
+    onTitleChangeHandler: (value: string) => void
     removeTask: (todoListId: string, id: string) => void
     changeStatus: (todoListId: string, taskId: string, isDone: boolean) => void
     task: TaskType

@@ -1,14 +1,14 @@
 import React, {MouseEvent, useCallback} from "react";
-import {FilterValuesType} from "../App";
-import AddItemForm from "./AddItemForm";
-import EditableSpan from "./EditableSpan";
+import {FilterValuesType} from "../oldAdd/App";
+import AddItemForm from "./AddItemForm/AddItemForm";
+import EditableSpan from "./EditableSpan/EditableSpan";
 import {Button, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {changeTodolistFilterAC} from "../state/todolists-reducer";
 import {AppRootState} from "../state/store";
-import {Task} from "./Task";
+import {Task} from "./Task/Task";
 
 type TodoListPropsType = {
     id: string
@@ -96,9 +96,12 @@ const TodoListWithRedux = React.memo((props: TodoListPropsType) => {
                 <AddItemForm addItem={addTask}/>
 
                 <div>
-                    {newTasks.map((i) => <Task TodolistId={props.id} onTitleChangeHandler={onTitleChangeHandler}
-                                               removeTask={removeTask} changeStatus={changeStatus} task={i}
-                                               key={i.id}/>)}
+                    {newTasks.map((task) => <Task TodolistId={props.id}
+                                                  onTitleChangeHandler={onTitleChangeHandler(task.id)}
+                                                  removeTask={removeTask}
+                                                  changeStatus={changeStatus}
+                                                  task={task}
+                                                  key={task.id}/>)}
                 </div>
 
                 <div>

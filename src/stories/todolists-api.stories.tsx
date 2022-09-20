@@ -1,10 +1,29 @@
-import React, {useEffect, useState} from "react"
+import {ComponentStory, ComponentMeta} from "@storybook/react";
+import React, {useEffect, useState} from "react";
+import {action} from "@storybook/addon-actions";
 import axios from "axios"
 import {todolistAPI} from "../api/todolist-api";
+import AddItemForm from "../components/AddItemForm/AddItemForm";
 
 export default {
-    title: "API"
+    title: "API",
+    // component: AddItemForm,
+    argTypes: {},
+    args:{}
 }
+// } as ComponentMeta<typeof AddItemForm>;
+
+// const Template: ComponentStory<typeof AddItemForm> = (args) => <AddItemForm {...args} />;
+//
+// export const AddItemForm_v1 = Template.bind({});
+//
+// const callback = action("button pressed")
+//
+// AddItemForm_v1.args = {
+//     addItem: (title: string) => {
+//         alert(title)
+//     }
+// };
 
 const settings = {
     withCredentials: true,

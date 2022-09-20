@@ -1,14 +1,14 @@
 import React, {MouseEvent, useCallback} from "react";
-import {FilterValuesType} from "../oldAdd/App";
 import AddItemForm from "./AddItemForm/AddItemForm";
 import EditableSpan from "./EditableSpan/EditableSpan";
 import {Button, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
-import {changeTodolistFilterAC} from "../state/todolists-reducer";
+import {changeTodolistFilterAC, FilterValuesType} from "../state/todolists-reducer";
 import {AppRootState} from "../state/store";
 import {Task} from "./Task/Task";
+import {TasksStatuses, TaskType} from "../api/todolist-api";
 
 type TodoListPropsType = {
     id: string
@@ -16,12 +16,6 @@ type TodoListPropsType = {
     filter: FilterValuesType
     removeTodoList: (todoListId: string) => void
     changeTodoListTitle: (todoListId: string, title: string) => void
-}
-
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
 }
 
 
@@ -59,8 +53,8 @@ const TodoListWithRedux = React.memo((props: TodoListPropsType) => {
         dispatch(removeTaskAC(todoListId, id))
     }
 
-    function changeStatus(todoListId: string, taskId: string, isDone: boolean) {
-        dispatch(changeTaskStatusAC(todoListId, taskId, isDone))
+    function changeStatus(todoListId: string, taskId: string, status: TasksStatuses) {
+        dispatch(changeTaskStatusAC(todoListId, taskId, status))
 
     }
 
@@ -72,10 +66,10 @@ const TodoListWithRedux = React.memo((props: TodoListPropsType) => {
 
     switch (filter) {
         case "active":
-            newTasks = newTasks.filter((i) => i.isDone === false)
+            newTasks = newTasks.filter((i) => i.status === TasksStatuses.New)
             break;
         case "completed":
-            newTasks = newTasks.filter((i) => i.isDone === true)
+            newTasks = newTasks.filter((i) => i.status === TasksStatuses.Completed)
             break;
         default:
             newTasks = tasks;

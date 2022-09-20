@@ -1,11 +1,10 @@
 import React, {ChangeEvent, MouseEvent} from "react";
-import {FilterValuesType} from "../oldAdd/App";
 import AddItemForm from "./AddItemForm/AddItemForm";
 import EditableSpan from "./EditableSpan/EditableSpan";
 import {Button, Checkbox, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
-import {removeTaskAC} from "../state/tasks-reducer";
-import {useDispatch} from "react-redux";
+import {TasksStatuses, TaskType} from "../api/todolist-api";
+import {FilterValuesType} from "../state/todolists-reducer";
 
 type TodoListPropsType = {
     id: string
@@ -14,18 +13,13 @@ type TodoListPropsType = {
     removeTask: (todoListId: string, id: string) => void
     changeFilter: (todoListId: string, value: FilterValuesType) => void
     addTask: (todoListId: string, title: string) => void
-    changeTaskStatus: (todoListId: string, taskId: string, isDone: boolean) => void
+    changeTaskStatus: (todoListId: string, taskId: string, status: TasksStatuses) => void
     changeTaskTitle: (todoListId: string, taskId: string, value: string) => void
     filter: FilterValuesType
     removeTodoList: (todoListId: string) => void
     changeTodoListTitle: (todoListId: string, title: string) => void
 }
 
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
-}
 
 
 const TodoList = (props: TodoListPropsType) => {
@@ -75,16 +69,16 @@ const TodoList = (props: TodoListPropsType) => {
                             }
 
                             const onBoxChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                                props.changeTaskStatus(props.id, i.id, e.currentTarget.checked)
+                                props.changeTaskStatus(props.id, i.id, TasksStatuses.Completed)
                             }
 
 
                             return (
-                                <div className={i.isDone ? "is-done" : ""}
+                                <div className={i.status === TasksStatuses.Completed ? "is-done" : ""}
                                      key={`${i.id}`}>
                                     <Checkbox
                                         onChange={onBoxChangeHandler}
-                                        checked={i.isDone}
+                                        checked={i.status === TasksStatuses.Completed}
                                     />
                                     <EditableSpan title={i.title}
                                                   onChange={onTitleChangeHandler(i.id)}

@@ -1,13 +1,13 @@
-import React, {useReducer, useState} from "react";
+import React, {useReducer} from "react";
 import "../App.css";
-import TodoList, {TaskType} from "../components/TodoList";
+import TodoList from "../components/TodoList";
 import {v1} from "uuid";
 import AddItemForm from "../components/AddItemForm/AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
 import {Menu} from "@mui/icons-material";
 import {
     changeTodolistFilterAC,
-    changeTodolistTitleAC,
+    changeTodolistTitleAC, FilterValuesType,
     removeTodolistAC,
     todolistsReducer
 } from "../state/todolists-reducer";
@@ -19,18 +19,7 @@ import {
     removeTaskAC,
     tasksReducer
 } from "../state/tasks-reducer";
-
-export type FilterValuesType = "all" | "completed" | "active";
-
-export type TodoListType = {
-    id: string
-    title: string
-    filter: FilterValuesType
-}
-
-export type TasksStateType = {
-    [key: string]: Array<TaskType>
-}
+import {TasksPriorities, TasksStatuses} from "../api/todolist-api";
 
 function AppWithReducers() {
 
@@ -39,21 +28,34 @@ function AppWithReducers() {
 
     const [tasks, dispatchTasksReducer] = useReducer(tasksReducer, {
         [todoListId1]: [
-            {id: v1(), title: "HTML", isDone: true},
-            {id: v1(), title: "CSS", isDone: true},
-            {id: v1(), title: "React", isDone: false},
-            {id: v1(), title: "Redux", isDone: true},
+            {
+                id: v1(), title: "HTML", status: TasksStatuses.Completed,
+                todoListId: todoListId1, order: 0, addedDate: "", deadline: "",
+                completed: true, startDate: "", description: "", priority: TasksPriorities.Low
+            },
+            {
+                id: v1(), title: "CSS", status: TasksStatuses.Completed,
+                todoListId: todoListId1, order: 0, addedDate: "", deadline: "",
+                completed: true, startDate: "", description: "", priority: TasksPriorities.Low
+            },
         ],
         [todoListId2]: [
-            {id: v1(), title: "Milk", isDone: true},
-            {id: v1(), title: "Sugar", isDone: true},
-            {id: v1(), title: "Salt", isDone: false},
+            {
+                id: v1(), title: "Mill", status: TasksStatuses.Completed,
+                todoListId: todoListId2, order: 0, addedDate: "", deadline: "",
+                completed: true, startDate: "", description: "", priority: TasksPriorities.Low
+            },
+            {
+                id: v1(), title: "Sugar", status: TasksStatuses.Completed,
+                todoListId: todoListId2, order: 0, addedDate: "", deadline: "",
+                completed: true, startDate: "", description: "", priority: TasksPriorities.Low
+            },
         ],
     });
 
     const [todoLists, dispatchTodolistsReducer] = useReducer(todolistsReducer, [
-        {id: todoListId1, title: "What to learn", filter: "all"},
-        {id: todoListId2, title: "What to buy", filter: "completed"},
+        {id: todoListId1, title: "What to learn", filter: "all", order: 0, addedDate: ""},
+        {id: todoListId2, title: "What to buy", filter: "completed", order: 1, addedDate: ""},
     ])
 
     function removeTask(todoListId: string, id: string) {
@@ -76,8 +78,8 @@ function AppWithReducers() {
         dispatchTasksReducer(action)
     }
 
-    function changeStatus(todoListId: string, taskId: string, isDone: boolean) {
-        dispatchTasksReducer(changeTaskStatusAC(todoListId, taskId, isDone))
+    function changeStatus(todoListId: string, taskId: string, status: TasksStatuses) {
+        dispatchTasksReducer(changeTaskStatusAC(todoListId, taskId, status))
 
     }
 
@@ -127,10 +129,10 @@ function AppWithReducers() {
 
                         switch (i.filter) {
                             case "active":
-                                newTasks = newTasks.filter((i) => i.isDone === false)
+                                newTasks = newTasks.filter((i) => i.status === TasksStatuses.New)
                                 break;
                             case "completed":
-                                newTasks = newTasks.filter((i) => i.isDone === true)
+                                newTasks = newTasks.filter((i) => i.status === TasksStatuses.Completed)
                                 break;
                             default:
                                 newTasks = tasks[i.id];

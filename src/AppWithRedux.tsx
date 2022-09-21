@@ -1,10 +1,10 @@
-import React, {useCallback} from "react";
+import React, {useCallback, useEffect} from "react";
 import "./App.css";
 import AddItemForm from "./components/AddItemForm/AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
 import {Menu} from "@mui/icons-material";
 import {
-    changeTodolistTitleAC,
+    changeTodolistTitleAC, fetchTodolistsTC,
     removeTodolistAC, TodoListDomainType,
 } from "./state/todolists-reducer";
 import {
@@ -13,7 +13,6 @@ import {
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
 import TodoListWithRedux from "./components/TodoListWithRedux";
-import {TodolistType} from "./api/todolist-api";
 
 let a = 0;
 
@@ -23,6 +22,10 @@ function AppWithRedux() {
 
     const dispatch = useDispatch();
     const todoLists = useSelector<AppRootState, Array<TodoListDomainType>>(state => state.todolists);
+
+    useEffect(() => {
+        dispatch(fetchTodolistsTC())
+    }, []);
 
 
     const removeTodoList = useCallback((todoListId: string) => {

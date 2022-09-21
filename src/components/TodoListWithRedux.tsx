@@ -1,9 +1,9 @@
-import React, {MouseEvent, useCallback} from "react";
+import React, {MouseEvent, useCallback, useEffect} from "react";
 import AddItemForm from "./AddItemForm/AddItemForm";
 import EditableSpan from "./EditableSpan/EditableSpan";
 import {Button, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../state/tasks-reducer";
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, fetchTasksTC, removeTaskAC} from "../state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {changeTodolistFilterAC, FilterValuesType} from "../state/todolists-reducer";
 import {AppRootState} from "../state/store";
@@ -27,8 +27,12 @@ const TodoListWithRedux = React.memo((props: TodoListPropsType) => {
 
     console.log("Todo")
 
-
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchTasksTC(id))
+    }, []);
+
 
     const onClickFilterHandler = useCallback((filter: FilterValuesType) => {
         return (e: MouseEvent<HTMLButtonElement>) => {

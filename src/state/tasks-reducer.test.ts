@@ -5,7 +5,7 @@ import {
     addTodoListAC,
     changeTaskStatusAC,
     changeTaskTitleAC,
-    removeTaskAC, removeTodolistAC,
+    removeTaskAC, removeTodolistAC, setTasksAC,
     tasksReducer
 } from "./tasks-reducer";
 import {TasksPriorities, TasksStateType, TasksStatuses} from "../api/todolist-api";
@@ -355,4 +355,38 @@ test("property with todolistId should be deleted", () => {
 
     expect(keys.length).toBe(1)
     expect(endState["todolistId2"]).not.toBeDefined()
+})
+
+test("tasks should be added", () => {
+    const startState: TasksStateType = {
+        "todoListId1": [
+            {
+                id: "1", title: "Mill", status: TasksStatuses.Completed,
+                todoListId: "todoListId1", order: 0, addedDate: "", deadline: "",
+                completed: true, startDate: "", description: "", priority: TasksPriorities.Low
+            },
+            {
+                id: "2", title: "Mill", status: TasksStatuses.Completed,
+                todoListId: "todoListId1", order: 0, addedDate: "", deadline: "",
+                completed: true, startDate: "", description: "", priority: TasksPriorities.Low
+            },
+            {
+                id: "3", title: "Mill", status: TasksStatuses.New,
+                todoListId: "todoListId1", order: 0, addedDate: "", deadline: "",
+                completed: true, startDate: "", description: "", priority: TasksPriorities.Low
+            },
+            {
+                id: "4", title: "Mill", status: TasksStatuses.Completed,
+                todoListId: "todoListId1", order: 0, addedDate: "", deadline: "",
+                completed: true, startDate: "", description: "", priority: TasksPriorities.Low
+            },
+        ],
+    }
+
+    const endState = tasksReducer({}, setTasksAC("todoListId1", startState["todoListId1"]))
+
+    const keys = Object.keys(endState)
+
+    expect(keys.length).toBe(1)
+    expect(endState["todoListId1"].length).toBe(4)
 })

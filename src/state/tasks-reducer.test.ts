@@ -2,9 +2,7 @@ import {v1} from "uuid";
 
 import {
     addTaskAC,
-    addTodoListAC,
-    changeTaskStatusAC,
-    changeTaskTitleAC,
+    updateTaskStatusAC,
     removeTaskAC, removeTodolistAC, setTasksAC,
     tasksReducer
 } from "./tasks-reducer";
@@ -118,14 +116,18 @@ test("correct task should be added", () => {
         ],
     }
 
-    const action = addTaskAC("todoListId2", "bread");
+    const action = addTaskAC({
+        id: "2", title: "bread", status: TasksStatuses.New,
+        todoListId: "todoListId1", order: 0, addedDate: "", deadline: "",
+        completed: true, startDate: "", description: "", priority: TasksPriorities.Low
+    },);
     const endState = tasksReducer(startState, action)
 
-    expect(endState["todoListId1"].length).toBe(4);
-    expect(endState["todoListId2"].length).toBe(4);
-    expect(endState["todoListId2"][0].id).toBeDefined();
-    expect(endState["todoListId2"][0].title).toBe("bread");
-    expect(endState["todoListId2"][0].status).toBe(TasksStatuses.New);
+    expect(endState["todoListId1"].length).toBe(5);
+    expect(endState["todoListId2"].length).toBe(3);
+    expect(endState["todoListId1"][0].id).toBeDefined();
+    expect(endState["todoListId1"][0].title).toBe("bread");
+    expect(endState["todoListId1"][0].status).toBe(TasksStatuses.New);
 
 })
 
@@ -173,7 +175,7 @@ test("correct task status should be changed", () => {
         ],
     }
 
-    const action = changeTaskStatusAC("todoListId2", "2", TasksStatuses.New);
+    const action = updateTaskStatusAC("todoListId2", "2", TasksStatuses.New);
     const endState = tasksReducer(startState, action)
 
     expect(endState["todoListId1"].length).toBe(4);

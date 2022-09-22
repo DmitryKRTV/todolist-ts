@@ -4,17 +4,14 @@ import AddItemForm from "./components/AddItemForm/AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
 import {Menu} from "@mui/icons-material";
 import {
+    addTodolistsTC, changeTodolistTitleTC,
     changeTodolistTitleAC, fetchTodolistsTC,
-    removeTodolistAC, TodoListDomainType,
+    removeTodolistsTC, TodoListDomainType,
 } from "./state/todolists-reducer";
-import {
-    addTodoListAC,
-} from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
 import TodoListWithRedux from "./components/TodoListWithRedux";
 
-let a = 0;
 
 function AppWithRedux() {
 
@@ -27,21 +24,17 @@ function AppWithRedux() {
         dispatch(fetchTodolistsTC())
     }, []);
 
-
     const removeTodoList = useCallback((todoListId: string) => {
-        const action = removeTodolistAC(todoListId)
-        a++;
-        dispatch(action)
+        dispatch(removeTodolistsTC(todoListId))
     }, [dispatch])
 
     const addTodoList = useCallback((title: string) => {
-        const action = addTodoListAC(title)
-        dispatch(action)
+        dispatch(addTodolistsTC(title))
     }, [dispatch])
 
 
     const changeTodoListTitle = useCallback((todoListId: string, value: string) => {
-        dispatch(changeTodolistTitleAC(todoListId, value))
+        dispatch(changeTodolistTitleTC(todoListId, value))
     }, [dispatch])
 
     return (

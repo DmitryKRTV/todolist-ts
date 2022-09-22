@@ -56,6 +56,8 @@ type UpdatedTask = {
     deadline: string
 }
 
+
+
 export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
@@ -106,7 +108,7 @@ export const todolistAPI = {
     },
 
     createTasks(todolistId: string, taskTitle: string) {
-        return instance.post<ResponseType>(`/todo-lists/${todolistId}/tasks/`, {title: taskTitle})
+        return instance.post<ResponseType<{item:TaskType}>>(`/todo-lists/${todolistId}/tasks/`, {title: taskTitle})
     },
 
     deleteTasks(todolistId: string, taskId: string) {

@@ -3,7 +3,11 @@ import AddItemForm from "./AddItemForm/AddItemForm";
 import EditableSpan from "./EditableSpan/EditableSpan";
 import {Button, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, fetchTasksTC, removeTaskAC} from "../state/tasks-reducer";
+import {
+    addTaskTC,
+    deleteTaskTC,
+    fetchTasksTC, updateTaskStatusTC,
+} from "../state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {changeTodolistFilterAC, FilterValuesType} from "../state/todolists-reducer";
 import {AppRootState} from "../state/store";
@@ -45,7 +49,7 @@ const TodoListWithRedux = React.memo((props: TodoListPropsType) => {
     }
 
     const addTask = useCallback((title: string) => {
-        dispatch(addTaskAC(props.id, title))
+        dispatch(addTaskTC(props.id, title))
     }, [props.id])
 
     const todoListTitleChanger = useCallback((title: string) => {
@@ -54,16 +58,16 @@ const TodoListWithRedux = React.memo((props: TodoListPropsType) => {
 
 
     function removeTask(todoListId: string, id: string) {
-        dispatch(removeTaskAC(todoListId, id))
+        dispatch(deleteTaskTC(todoListId, id))
     }
 
     function changeStatus(todoListId: string, taskId: string, status: TasksStatuses) {
-        dispatch(changeTaskStatusAC(todoListId, taskId, status))
+        dispatch(updateTaskStatusTC(todoListId, taskId, {status}))
 
     }
 
     const onTitleChangeHandler = useCallback((TaskId: string) => {
-        return (value: string) => dispatch(changeTaskTitleAC(props.id, TaskId, value))
+        return (value: string) => dispatch(updateTaskStatusTC(props.id, TaskId, {title: value}))
     }, [dispatch, props.id])
 
     let newTasks = tasks;

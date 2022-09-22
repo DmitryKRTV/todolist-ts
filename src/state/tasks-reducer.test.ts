@@ -1,5 +1,3 @@
-import {v1} from "uuid";
-
 import {
     addTaskAC,
     updateTaskStatusAC,
@@ -7,6 +5,7 @@ import {
     tasksReducer
 } from "./tasks-reducer";
 import {TasksPriorities, TasksStateType, TasksStatuses} from "../api/todolist-api";
+import {addTodolistAC} from "./todolists-reducer";
 
 test("correct test should be deleted", () => {
 
@@ -175,7 +174,7 @@ test("correct task status should be changed", () => {
         ],
     }
 
-    const action = updateTaskStatusAC("todoListId2", "2", TasksStatuses.New);
+    const action = updateTaskStatusAC("todoListId2", "2", {status: TasksStatuses.New});
     const endState = tasksReducer(startState, action)
 
     expect(endState["todoListId1"].length).toBe(4);
@@ -241,7 +240,7 @@ test("correct task title should be changed", () => {
         ],
     }
 
-    const action = changeTaskTitleAC("todoListId2", "2", "Vodka");
+    const action = updateTaskStatusAC("todoListId2", "2", {title: "Vodka"});
     const endState = tasksReducer(startState, action)
 
     expect(endState["todoListId1"].length).toBe(4);
@@ -307,7 +306,10 @@ test("new array should be added", () => {
     }
 
 
-    const action = addTodoListAC("New Todolist");
+    const action = addTodolistAC({
+        addedDate: "", id: "4", order: 0, title: "New todolist"
+
+    });
     const endState = tasksReducer(startState, action)
 
     const keys = Object.keys(endState)
@@ -315,7 +317,6 @@ test("new array should be added", () => {
     if (!newKey) {
         throw Error("new key should be added")
     }
-
 
     expect(endState["todoListId1"].length).toBe(4);
     expect(endState["todoListId2"].length).toBe(3);

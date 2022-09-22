@@ -32,7 +32,10 @@ test("todolistsReducer should delete an element", () => {
 
 test("todolistsReducer should add an element", () => {
 
-    const newTodoListTitle = "New todolist"
+    const newTodoListTitle = {
+        addedDate: "", id: "4", order: 0, title: "New todolist"
+
+    }
 
 
     const todoLists: Array<TodoListDomainType> = [
@@ -43,7 +46,7 @@ test("todolistsReducer should add an element", () => {
     const endState = todolistsReducer(todoLists, addTodolistAC(newTodoListTitle));
 
     expect(endState.length).toBe(3);
-    expect(endState[0].title).toBe(newTodoListTitle);
+    expect(endState[0].title).toBe(newTodoListTitle.title);
 })
 
 test("correct todolist should change its name", () => {

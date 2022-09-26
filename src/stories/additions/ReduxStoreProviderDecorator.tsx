@@ -43,9 +43,13 @@ const initialGlobalState : AppRootState = {
         ],
     },
     todolists: [
-        {id: todoListId1, title: "What to learn", filter: "all", order: 0, addedDate: ""},
-        {id: todoListId2, title: "What to buy", filter: "completed", order: 1, addedDate: ""},
-    ]
+        {id: todoListId1, title: "What to learn", filter: "all", order: 0, addedDate: "", entityStatus: "idle"},
+        {id: todoListId2, title: "What to buy", filter: "completed", order: 1, addedDate: "",  entityStatus: "idle"},
+    ],
+    app: {
+        error: null,
+        status: "idle"
+    }
 }
 
 export const storybookStore = legacy_createStore(rootReducer, initialGlobalState as AppRootState);

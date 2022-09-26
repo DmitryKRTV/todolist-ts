@@ -1,11 +1,16 @@
 import React from "react";
 import "./App.css";
-import {AppBar, Button, IconButton, Toolbar, Typography} from "@mui/material";
+import {AppBar, Button, IconButton, LinearProgress, Toolbar, Typography} from "@mui/material";
 import {Menu} from "@mui/icons-material";
 import {TodoListsList} from "../features/TodoListsList/TodoListsList";
+import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
+import {useAppSelector} from "./hooks";
+import {RequestStatusType} from "./app-reducer";
 
 
 function AppWithRedux() {
+
+    const status = useAppSelector<RequestStatusType>(state => state.app.status)
 
     return (
         <div className="App">
@@ -26,7 +31,10 @@ function AppWithRedux() {
                     </Typography>
                     <Button color="inherit">Login</Button>
                 </Toolbar>
+
             </AppBar>
+            {status === "loading" && <LinearProgress/>}
+            <ErrorSnackbar/>
             <TodoListsList/>
 
         </div>

@@ -1,7 +1,7 @@
 
-import {addTodoListAC, tasksReducer} from "./tasks-reducer";
+import {addTodoListAC, tasksReducer} from "./Task/tasks-reducer";
 import {setTodolistFilterAC, TodoListDomainType, todolistsReducer} from "./todolists-reducer";
-import {TasksStateType, TodolistType} from "../api/todolist-api";
+import {TasksStateType, TodolistType} from "../../api/todolist-api";
 
 test("it's should me equals", () => {
 

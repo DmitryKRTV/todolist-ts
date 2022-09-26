@@ -3,7 +3,7 @@ import React from "react";
 import {action} from "@storybook/addon-actions";
 import {Task} from "./Task";
 import {v1} from "uuid";
-import {TasksPriorities, TasksStatuses} from "../../api/todolist-api";
+import {TasksPriorities, TasksStatuses} from "../../../api/todolist-api";
 
 export default {
     title: "Task Example",

@@ -1,10 +1,10 @@
 import React, {ChangeEvent, MouseEvent} from "react";
-import AddItemForm from "./AddItemForm/AddItemForm";
-import EditableSpan from "./EditableSpan/EditableSpan";
+import AddItemForm from "../../components/AddItemForm/AddItemForm";
+import EditableSpan from "../../components/EditableSpan/EditableSpan";
 import {Button, Checkbox, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
-import {TasksStatuses, TaskType} from "../api/todolist-api";
-import {FilterValuesType} from "../state/todolists-reducer";
+import {TasksStatuses, TaskType} from "../../api/todolist-api";
+import {FilterValuesType} from "../../features/Todolist/todolists-reducer";
 import {useDispatch} from "react-redux";
 
 type TodoListPropsType = {

@@ -4,8 +4,8 @@ import {
     removeTaskAC, removeTodolistAC, setTasksAC,
     tasksReducer
 } from "./tasks-reducer";
-import {TasksPriorities, TasksStateType, TasksStatuses} from "../api/todolist-api";
-import {addTodolistAC} from "./todolists-reducer";
+import {TasksPriorities, TasksStateType, TasksStatuses} from "../../../api/todolist-api";
+import {addTodolistAC} from "../todolists-reducer";
 
 test("correct test should be deleted", () => {
 

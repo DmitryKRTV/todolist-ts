@@ -2,7 +2,7 @@ import {v1} from "uuid";
 import {
     addTodolistAC, changeTodolistFilterAC,
     changeTodolistTitleAC, FilterValuesType,
-    removeTodolistAC, setTodolistFilterAC, TodoListDomainType,
+    removeTodolistAC, setTodolistsAC, TodoListDomainType,
     todolistsReducer
 } from "./todolists-reducer";
 import {TodolistType} from "../../api/todolist-api";
@@ -99,7 +99,7 @@ test("todolists should be set", () => {
         {id: todoListId2, title: "What to buy", order: 1, addedDate: ""},
     ];
 
-    const endState = todolistsReducer([],setTodolistFilterAC(todoLists));
+    const endState = todolistsReducer([],setTodolistsAC(todoLists));
 
     expect(endState.length).toBe(2);
     expect(endState[1].filter).toBe("all");

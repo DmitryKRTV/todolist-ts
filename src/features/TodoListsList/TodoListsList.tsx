@@ -11,10 +11,11 @@ import React, {useCallback, useEffect} from "react";
 import {Container, Grid, Paper} from "@mui/material";
 import AddItemForm from "../../components/AddItemForm/AddItemForm";
 import TodoListWithRedux from "../Todolist/TodoListWithRedux";
+import {useAppDispatch} from "../../app/hooks";
 
 export const TodoListsList = () => {
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const todoLists = useSelector<AppRootState, Array<TodoListDomainType>>(state => state.todolists);
 
     useEffect(() => {

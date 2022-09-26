@@ -31,7 +31,7 @@ const TodoListWithRedux = React.memo((props: TodoListPropsType) => {
 
     console.log("Todo")
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<any>();
 
     useEffect(() => {
         dispatch(fetchTasksTC(id))

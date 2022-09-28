@@ -17,7 +17,6 @@ export type AppActionsType = FinalTasksActionType | FinalTodoListActionTypes | F
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootState, unknown, AppActionsType>
 // export type AppDispatch = typeof store.dispatch
 export type AppDispatch = ThunkDispatch<AppRootState, unknown, AppActionsType>
-
 // @ts-ignore
 // window.store = store;
 

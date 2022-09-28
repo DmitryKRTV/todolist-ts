@@ -1,4 +1,4 @@
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {AppRootState} from "../../app/store";
 import {
     addTodolistsTC,
@@ -13,12 +13,19 @@ import AddItemForm from "../../components/AddItemForm/AddItemForm";
 import TodoListWithRedux from "../Todolist/TodoListWithRedux";
 import {useAppDispatch} from "../../app/hooks";
 
-export const TodoListsList = () => {
+type PropsType = {
+    demo?: boolean
+}
+
+export const TodoListsList = (props: PropsType) => {
+
+    const {demo = false} = props
 
     const dispatch = useAppDispatch();
     const todoLists = useSelector<AppRootState, Array<TodoListDomainType>>(state => state.todolists);
 
     useEffect(() => {
+        if (demo) return;
         dispatch(fetchTodolistsTC())
     }, []);
 
@@ -47,11 +54,10 @@ export const TodoListsList = () => {
                         return <Grid item key={i.id}>
                             <Paper style={{padding: "20px"}}>
                                 <TodoListWithRedux
-                                    id={i.id}
-                                    title={i.title}
-                                    filter={i.filter}
+                                    todolist={i}
                                     removeTodoList={removeTodoList}
                                     changeTodoListTitle={changeTodoListTitle}
+                                    demo={demo}
                                 />
                             </Paper>
                         </Grid>

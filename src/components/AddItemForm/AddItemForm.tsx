@@ -4,11 +4,13 @@ import {ControlPoint} from "@mui/icons-material";
 
 type AddItemFormType = {
     addItem: (title: string) => void
+    disabled?: boolean
 }
+
 const AddItemForm: React.FC<AddItemFormType> = React.memo((props) => {
     console.log("Add item form")
 
-    const {addItem} = props;
+    const {addItem, disabled = false} = props;
 
     const [title, setTitle] = useState("");
     const [error, setError] = useState<string | null>(null);
@@ -53,11 +55,13 @@ const AddItemForm: React.FC<AddItemFormType> = React.memo((props) => {
                        onKeyDown={onKeyPressHandler}
                        error={!!error}
                        helperText={error}
+                       disabled={disabled}
             />
             <IconButton onClick={addTaskHandler}
                         color={"primary"}
                 // style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}
                         style={{margin: "8px 0px"}}
+                        disabled={disabled}
             >
                 <ControlPoint/>
             </IconButton>

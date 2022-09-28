@@ -1,4 +1,4 @@
-import {ComponentStory, ComponentMeta} from "@storybook/react";
+import {ComponentMeta} from "@storybook/react";
 import React from "react";
 import {action} from "@storybook/addon-actions";
 import AppWithRedux from "./AppWithRedux";
@@ -14,5 +14,5 @@ export default {
 const callback = action("button pressed")
 
 export const AppWithReduxBaseExample = () => {
-    return <AppWithRedux/>
+    return <AppWithRedux demo={true}/>
 }

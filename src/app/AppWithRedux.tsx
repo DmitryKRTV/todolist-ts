@@ -7,8 +7,15 @@ import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
 import {useAppSelector} from "./hooks";
 import {RequestStatusType} from "./app-reducer";
 
+type PropsType = {
+    demo?: boolean
+}
 
-function AppWithRedux() {
+function AppWithRedux(props: PropsType) {
+
+    const {demo = false} = props
+
+    console.log("App" + demo)
 
     const status = useAppSelector<RequestStatusType>(state => state.app.status)
 
@@ -35,7 +42,7 @@ function AppWithRedux() {
             </AppBar>
             {status === "loading" && <LinearProgress/>}
             <ErrorSnackbar/>
-            <TodoListsList/>
+            <TodoListsList demo={demo}/>
 
         </div>
     );

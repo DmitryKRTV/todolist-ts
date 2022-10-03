@@ -17,5 +17,3 @@ export const handleServerNetworkError = (error: AxiosError, dispatch: AppDispatc
     dispatch(setAppStatus("failed"))
 }
 
-
-export {}

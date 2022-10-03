@@ -2,9 +2,8 @@ import {TasksPriorities, TasksStateType, TasksStatuses, TaskType, todolistAPI} f
 import {AddTodolistActionType, SetTodolistsActionType} from "../todolists-reducer";
 import {Dispatch} from "redux";
 import {AppActionsType, AppRootState, AppThunk} from "../../../app/store";
-import {setAppError, setAppStatus} from "../../../app/app-reducer";
+import {setAppStatus} from "../../../app/app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../../../utils/error-utils";
-
 
 const initialState: TasksStateType = {}
 
@@ -66,18 +65,28 @@ export const fetchTasksTC = (todolistsId: string): AppThunk => async dispatch =>
     dispatch(setTasksAC(todolistsId, res.data.items))
     dispatch(setAppStatus("succeeded"))
 }
-
 export const deleteTaskTC = (todoListId: string, id: string) => (dispatch: Dispatch<AppActionsType>) => {
+    dispatch(setAppStatus("loading"))
     todolistAPI.deleteTasks(todoListId, id)
         .then(res => {
             dispatch(removeTaskAC(todoListId, id))
+            dispatch(setAppStatus("succeeded"))
+        })
+        .catch((error) => {
+            handleServerNetworkError(error, dispatch)
         })
 }
 export const addTaskTC = (todolistId: string, title: string): AppThunk => (dispatch) => {
     dispatch(setAppStatus("loading"))
     todolistAPI.createTasks(todolistId, title)
         .then(res => {
-            handleServerAppError(res.data, dispatch)
+            if(res.data.resultCode === 0) {
+                dispatch(addTaskAC(res.data.data.item))
+                dispatch(setAppStatus("succeeded"))
+            } else {
+                handleServerAppError(res.data, dispatch)
+                dispatch(setAppStatus("failed"))
+            }
         })
         .catch((error) => {
             handleServerNetworkError(error, dispatch)
@@ -96,11 +105,13 @@ type UpdatedTaskDomainType = {
 }
 export const updateTaskStatusTC = (todolistId: string, taskId: string, model: UpdatedTaskDomainType): AppThunk => {
     return (dispatch, getState: () => AppRootState) => {
+        dispatch(setAppStatus("loading"))
 
         const state = getState();
         const task = state.tasks[todolistId].find(task => task.id === taskId)
 
         if (!task) {
+            dispatch(setAppStatus("failed"))
             throw new Error("Task not found")
         }
 
@@ -117,12 +128,15 @@ export const updateTaskStatusTC = (todolistId: string, taskId: string, model: Up
             .then(res => {
                 if(res.data.resultCode === 0) {
                     dispatch(updateTaskStatusAC(todolistId, taskId, model))
+                    dispatch(setAppStatus("succeeded"))
                 } else {
                     handleServerAppError(res.data, dispatch)
+                    dispatch(setAppStatus("failed"))
                 }
             })
             .catch((error) => {
                 handleServerNetworkError(error, dispatch)
+                dispatch(setAppStatus("failed"))
             })
     }
 }

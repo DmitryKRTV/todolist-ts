@@ -1,5 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import {Button, IconButton, TextField} from "@mui/material";
+import {IconButton, TextField} from "@mui/material";
 import {ControlPoint} from "@mui/icons-material";
 
 type AddItemFormType = {
@@ -8,7 +8,6 @@ type AddItemFormType = {
 }
 
 const AddItemForm: React.FC<AddItemFormType> = React.memo((props) => {
-    console.log("Add item form")
 
     const {addItem, disabled = false} = props;
 

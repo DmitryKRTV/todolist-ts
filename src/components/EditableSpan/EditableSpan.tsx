@@ -7,8 +7,6 @@ type EditableSpanType = {
 }
 const EditableSpan: React.FC<EditableSpanType> = React.memo(({title, onChange}) => {
 
-    console.log("EditSpan")
-
     const [editMode, setEditMode] = useState(false);
     const [inputValue, setInputValue] = useState("");
 

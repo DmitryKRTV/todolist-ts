@@ -1,13 +1,9 @@
-import React, {MouseEvent, useCallback, useEffect} from "react";
+import React, {useCallback, useEffect} from "react";
 import AddItemForm from "../../components/AddItemForm/AddItemForm";
 import EditableSpan from "../../components/EditableSpan/EditableSpan";
 import {Button, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
-import {
-    addTaskTC,
-    deleteTaskTC,
-    fetchTasksTC, updateTaskStatusTC,
-} from "./Task/tasks-reducer";
+import {addTaskTC, deleteTaskTC, fetchTasksTC, updateTaskStatusTC,} from "./Task/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {changeTodolistFilterAC, FilterValuesType, TodoListDomainType} from "./todolists-reducer";
 import {AppRootState} from "../../app/store";
@@ -28,21 +24,19 @@ const TodoListWithRedux = React.memo((props: TodoListPropsType) => {
 
     const tasks = useSelector<AppRootState, Array<TaskType>>(state => state.tasks[todolist.id]);
 
-    console.log("Todo")
-
     const dispatch = useDispatch<any>();
 
     useEffect(() => {
         if(demo) return;
         dispatch(fetchTasksTC(todolist.id))
-    }, []);
+    }, [demo, dispatch, todolist.id]);
 
 
     const onClickFilterHandler = useCallback((filter: FilterValuesType) => {
-        return (e: MouseEvent<HTMLButtonElement>) => {
+        return () => {
             dispatch(changeTodolistFilterAC(todolist.id, filter))
         }
-    }, [todolist.id, todolist.filter])
+    }, [dispatch, todolist.id])
 
     const removeTodoListHandler = () => {
         props.removeTodoList(todolist.id)
@@ -50,11 +44,11 @@ const TodoListWithRedux = React.memo((props: TodoListPropsType) => {
 
     const addTask = useCallback((title: string) => {
         dispatch(addTaskTC(todolist.id, title))
-    }, [todolist.id])
+    }, [dispatch, todolist.id])
 
     const todoListTitleChanger = useCallback((title: string) => {
         props.changeTodoListTitle(todolist.id, title)
-    }, [todolist.id, props.changeTodoListTitle])
+    }, [props, todolist.id])
 
 
     function removeTask(todoListId: string, id: string) {

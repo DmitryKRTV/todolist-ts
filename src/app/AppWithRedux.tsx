@@ -32,12 +32,11 @@ function AppWithRedux(props: PropsType) {
         () => {
             dispatch(logOut())
         },
-        [isLoggedIn],
+        [dispatch, isLoggedIn],
     );
 
-
     if (!initialized) {
-        return <div style={{position: "absolute", top: "30%", width: "100%", textAlign: "center"}} ><CircularProgress /></div>
+        return <div style={{position: "absolute", top: "30%", width: "100%", textAlign: "center"}}><CircularProgress /></div>
     }
 
     return (

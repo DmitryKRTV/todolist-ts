@@ -5,15 +5,15 @@ import {AxiosError} from "axios";
 
 export const handleServerAppError = <D>(data: ResponseType<D>, dispatch: AppDispatch) => {
     if (data.messages.length) {
-        dispatch(setAppError(data.messages[0]))
+        dispatch(setAppError({error: data.messages[0]}))
     } else {
-        dispatch(setAppError("some error occurred"))
+        dispatch(setAppError({error: "some error occurred"}))
     }
-    dispatch(setAppStatus("failed"))
+    dispatch(setAppStatus({status: "failed"}))
 }
 
 export const handleServerNetworkError = (error: AxiosError, dispatch: AppDispatch) => {
-    dispatch(setAppError(error.message ? error.message : "some error occurred"))
-    dispatch(setAppStatus("failed"))
+    dispatch(setAppError(error.message ? {error: error.message} : {error: "some error occurred"}))
+    dispatch(setAppStatus({status: "failed"}))
 }
 

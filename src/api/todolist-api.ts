@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios, {AxiosResponse} from "axios"
 
 const settings = {
     withCredentials: true,
@@ -126,7 +126,7 @@ export type LoginParamsType = {
 
 export const authAPI = {
     login(data: LoginParamsType) {
-        return instance.post<ResponseType<{userId?: number}>>(
+        return instance.post<LoginParamsType, AxiosResponse<ResponseType<{userId?: number}>>>(
                 `auth/login`,
             data,
             )

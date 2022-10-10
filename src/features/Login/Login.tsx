@@ -62,13 +62,13 @@ export const Login = () => {
                                    margin={"normal"}
                                    {...formik.getFieldProps("email")}
                         ></TextField>
-                        {formik.errors.email ? <div>{formik.errors.email}</div> : null}
+                        {formik.touched.email && formik.errors.email ? <div>{formik.errors.email}</div> : null}
                         <TextField type={"password"}
                                    label={"Password"}
                                    margin={"normal"}
                                    {...formik.getFieldProps("password")}
                         ></TextField>
-                        {formik.errors.password ? <div>{formik.errors.password}</div> : null}
+                        {formik.touched.password &&formik.errors.password ? <div>{formik.errors.password}</div> : null}
                         <FormControlLabel
                             control={<Checkbox
                                 {...formik.getFieldProps("rememberMe")}

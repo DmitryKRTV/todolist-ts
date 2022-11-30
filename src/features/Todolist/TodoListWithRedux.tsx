@@ -34,7 +34,7 @@ const TodoListWithRedux = React.memo((props: TodoListPropsType) => {
 
     const onClickFilterHandler = useCallback((filter: FilterValuesType) => {
         return () => {
-            dispatch(changeTodolistFilterAC(todolist.id, filter))
+            dispatch(changeTodolistFilterAC({id: todolist.id, filter: filter}))
         }
     }, [dispatch, todolist.id])
 

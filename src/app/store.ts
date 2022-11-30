@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
 })
 
 // export const store = legacy_createStore(rootReducer, applyMiddleware(thunk));
-
+// innerJs
 export const store = configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(thunk)

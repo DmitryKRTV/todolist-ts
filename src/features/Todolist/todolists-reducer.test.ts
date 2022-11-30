@@ -25,7 +25,7 @@ test("todolistsReducer should delete an element", () => {
         {id: todoListId2, title: "What to buy", filter: "completed", order: 1, addedDate: "", entityStatus: "idle"},
     ];
 
-    const endState = todolistsReducer(todoLists, removeTodolistAC(todoListId1));
+    const endState = todolistsReducer(todoLists, removeTodolistAC({todolistId: todoListId1}));
 
     expect(endState.length).toBe(1);
     expect(endState[0].id).toBe(todoListId2);
@@ -44,7 +44,7 @@ test("todolistsReducer should add an element", () => {
         {id: todoListId2, title: "What to buy", filter: "completed", order: 1, addedDate: "", entityStatus: "idle"},
     ];
 
-    const endState = todolistsReducer(todoLists, addTodolistAC(newTodoListTitle));
+    const endState = todolistsReducer(todoLists, addTodolistAC({todolist: newTodoListTitle}));
 
     expect(endState.length).toBe(3);
     expect(endState[0].title).toBe(newTodoListTitle.title);
@@ -65,7 +65,7 @@ test("correct todolist should change its name", () => {
         {id: todoListId2, title: "What to buy", filter: "completed", order: 1, addedDate: "", entityStatus: "idle"},
     ];
 
-    const endState = todolistsReducer(todoLists, changeTodolistTitleAC(todoListId2, newTodoListTitle));
+    const endState = todolistsReducer(todoLists, changeTodolistTitleAC({id: todoListId2, title: newTodoListTitle}));
 
     expect(endState.length).toBe(2);
     expect(endState[1].title).toBe(newTodoListTitle);
@@ -86,7 +86,7 @@ test("correct filter should be changed", () => {
         {id: todoListId2, title: "What to buy", filter: "completed", order: 1, addedDate: "", entityStatus: "idle"},
     ];
 
-    const endState = todolistsReducer(todoLists, changeTodolistFilterAC(todoListId2, newFilter));
+    const endState = todolistsReducer(todoLists, changeTodolistFilterAC({id: todoListId2, filter: newFilter}));
 
     expect(endState.length).toBe(2);
     expect(endState[1].filter).toBe(newFilter);
@@ -100,7 +100,7 @@ test("todolists should be set", () => {
         {id: todoListId2, title: "What to buy", order: 1, addedDate: ""},
     ];
 
-    const endState = todolistsReducer([],setTodolistsAC(todoLists));
+    const endState = todolistsReducer([],setTodolistsAC({todolists: todoLists}));
 
     expect(endState.length).toBe(2);
     expect(endState[1].filter).toBe("all");
@@ -116,7 +116,7 @@ test("correct entity status should be changed", () => {
         {id: todoListId2, title: "What to buy", filter: "completed", order: 1, addedDate: "", entityStatus: "idle"},
     ];
 
-    const endState = todolistsReducer(todoLists, changeTodolistEntityStatusAC(todoListId2, newStatus));
+    const endState = todolistsReducer(todoLists, changeTodolistEntityStatusAC({id: todoListId2, status: newStatus}));
 
     expect(endState.length).toBe(2);
     expect(endState[1].entityStatus).toBe(newStatus);

@@ -1,9 +1,15 @@
 import React from "react";
 import {Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, TextField} from "@mui/material";
-import {useFormik} from "formik";
+import {FormikHelpers, FormikValues, useFormik} from "formik";
 import {loginMe} from "./login-reducer";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {Navigate} from "react-router-dom";
+
+type FormValues = {
+    email: string,
+    password: string,
+    rememberMe: boolean,
+}
 
 export const Login = () => {
 
@@ -29,8 +35,16 @@ export const Login = () => {
             }
             return errors
         },
-        onSubmit: values => {
-            dispatch(loginMe(values))
+        onSubmit: async (values, formikHelpers: FormikHelpers<FormValues>) => {
+            const res = await dispatch(loginMe({data: values}))
+
+            if (loginMe.rejected.match(res)) {
+                if (res.payload?.fieldsErrors?.length) {
+                    const error = res.payload?.fieldsErrors[0]
+                    formikHelpers.setFieldError(error.field, error.error)
+                }
+            }
+
             formik.resetForm()
         },
     })

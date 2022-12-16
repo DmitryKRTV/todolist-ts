@@ -10,20 +10,19 @@ export default {
     // component: AddItemForm,
     argTypes: {},
     args:{}
-}
-// } as ComponentMeta<typeof AddItemForm>;
+} as ComponentMeta<typeof AddItemForm>;
 
-// const Template: ComponentStory<typeof AddItemForm> = (args) => <AddItemForm {...args} />;
-//
-// export const AddItemForm_v1 = Template.bind({});
-//
-// const callback = action("button pressed")
-//
-// AddItemForm_v1.args = {
-//     addItem: (title: string) => {
-//         alert(title)
-//     }
-// };
+const Template: ComponentStory<typeof AddItemForm> = (args) => <AddItemForm {...args} />;
+
+export const AddItemForm_v1 = Template.bind({});
+
+const callback = action("button pressed")
+
+AddItemForm_v1.args = {
+    addItem: (title: string) => {
+        alert(title)
+    }
+};
 
 const settings = {
     withCredentials: true,

@@ -25,9 +25,9 @@ export const store = configureStore({
 export type AppRootState = ReturnType<typeof store.getState>
 export type AppActionsType = FinalTasksActionType | FinalTodoListActionTypes | FinalLoginActionTypes | FinalAppActionsType
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootState, unknown, AppActionsType>
-// export type AppDispatch = typeof store.dispatch
+export type AppDispatch = typeof store.dispatch
 // export type AppRootState = ReturnType<typeof rootReducer>
-export type AppDispatch = ThunkDispatch<AppRootState, unknown, AppActionsType>
+// export type AppDispatch = ThunkDispatch<AppRootState, unknown, AppActionsType>
 
 // @ts-ignore
 // window.store = store;

@@ -19,10 +19,11 @@ export type TodolistType = {
     order: number
 }
 
+export type FieldErrorType = { field: string; error: string };
 export type ResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>
-    fieldsErrors: Array<string>
+    fieldsErrors?: Array<FieldErrorType>
     data: D
 }
 
@@ -55,8 +56,6 @@ type UpdatedTask = {
     startDate: string
     deadline: string
 }
-
-
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
@@ -108,7 +107,7 @@ export const todolistAPI = {
     },
 
     createTasks(todolistId: string, taskTitle: string) {
-        return instance.post<ResponseType<{item:TaskType}>>(`/todo-lists/${todolistId}/tasks/`, {title: taskTitle})
+        return instance.post<ResponseType<{ item: TaskType }>>(`/todo-lists/${todolistId}/tasks/`, {title: taskTitle})
     },
 
     deleteTasks(todolistId: string, taskId: string) {
@@ -126,17 +125,17 @@ export type LoginParamsType = {
 
 export const authAPI = {
     login(data: LoginParamsType) {
-        return instance.post<LoginParamsType, AxiosResponse<ResponseType<{userId?: number}>>>(
-                `auth/login`,
+        return instance.post<LoginParamsType, AxiosResponse<ResponseType<{ userId?: number }>>>(
+            `auth/login`,
             data,
-            )
+        )
     },
     logout() {
-        return instance.delete<ResponseType<{userId?: number}>>(
+        return instance.delete<ResponseType<{ userId?: number }>>(
             `auth/login`,
         )
     },
     me() {
-        return instance.get<ResponseType<{id: number, email: string, login: string}>>(`/auth/me`)
+        return instance.get<ResponseType<{ id: number, email: string, login: string }>>(`/auth/me`)
     }
 }

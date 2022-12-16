@@ -3,7 +3,7 @@ import AddItemForm from "../../components/AddItemForm/AddItemForm";
 import EditableSpan from "../../components/EditableSpan/EditableSpan";
 import {Button, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
-import {addTaskTC, deleteTaskTC, fetchTasksTC, updateTaskStatusTC,} from "./Task/tasks-reducer";
+import {addTaskTC, deleteTask, fetchTasks, updateTaskStatusTC,} from "./Task/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {changeTodolistFilterAC, FilterValuesType, TodoListDomainType} from "./todolists-reducer";
 import {AppRootState} from "../../app/store";
@@ -28,7 +28,7 @@ const TodoListWithRedux = React.memo((props: TodoListPropsType) => {
 
     useEffect(() => {
         if(demo) return;
-        dispatch(fetchTasksTC(todolist.id))
+        dispatch(fetchTasks(todolist.id))
     }, [demo, dispatch, todolist.id]);
 
 
@@ -52,7 +52,7 @@ const TodoListWithRedux = React.memo((props: TodoListPropsType) => {
 
 
     function removeTask(todoListId: string, id: string) {
-        dispatch(deleteTaskTC(todoListId, id))
+        dispatch(deleteTask({todoListId, id}))
     }
 
     function changeStatus(todoListId: string, taskId: string, status: TasksStatuses) {

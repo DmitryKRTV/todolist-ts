@@ -7,7 +7,7 @@ import {TodoListsList} from "../features/TodoListsList/TodoListsList";
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
 import {useAppDispatch, useAppSelector} from "./hooks";
 import {isInitializedApp, logOut, RequestStatusType} from "./app-reducer";
-import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
+import {BrowserRouter, HashRouter, Navigate, Route, Routes} from "react-router-dom";
 import {Login} from "../features/Login/Login";
 
 type PropsType = {
@@ -40,7 +40,7 @@ function AppWithRedux(props: PropsType) {
     }
 
     return (
-        <BrowserRouter>
+        <HashRouter>
             <div className="App">
                 <AppBar position="static">
                     <Toolbar>
@@ -74,7 +74,7 @@ function AppWithRedux(props: PropsType) {
                 </Container>
 
             </div>
-        </BrowserRouter>
+        </HashRouter>
     );
 }
 

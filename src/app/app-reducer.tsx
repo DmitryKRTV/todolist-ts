@@ -4,15 +4,19 @@ import {setIsLoggedInAC} from "../features/Login/login-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-const initialState = {
-    status: "idle" as RequestStatusType,
-    error: null as RequestErrorType,
-    initialized: false as InitializedStatusType,
+export type InitialStateType = {
+    status: RequestStatusType,
+    error: RequestErrorType,
+    initialized: InitializedStatusType,
 }
 
 const slice = createSlice({
     name: "app",
-    initialState: initialState,
+    initialState: {
+        status: "idle" as RequestStatusType,
+        error: null as RequestErrorType,
+        initialized: false as InitializedStatusType,
+    },
     reducers: {
         setAppError(state, action: PayloadAction<{error: RequestErrorType}>) {
             state.error = action.payload.error
@@ -23,8 +27,7 @@ const slice = createSlice({
         setAppInitialized(state, action:PayloadAction<{initialized: InitializedStatusType}>) {
             state.initialized = action.payload.initialized
         },
-    },
-
+    }
 })
 
 export const appReducer = slice.reducer
@@ -85,7 +88,7 @@ export const logOut = (): AppThunk => dispatch => {
 //     withCredentials: true,
 // })
 
-export type InitialStateType = typeof initialState
+// export type InitialStateType = typeof initialState
 export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed"
 export type InitializedStatusType = boolean
 export type RequestErrorType = string | null

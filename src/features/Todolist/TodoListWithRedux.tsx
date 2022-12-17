@@ -56,12 +56,12 @@ const TodoListWithRedux = React.memo((props: TodoListPropsType) => {
     }
 
     function changeStatus(todoListId: string, taskId: string, status: TasksStatuses) {
-        dispatch(updateTaskStatusTC(todoListId, taskId, {status}))
+        dispatch(updateTaskStatusTC({todolistId: todoListId, taskId: taskId, model: {status}}))
 
     }
 
     const onTitleChangeHandler = useCallback((TaskId: string) => {
-        return (value: string) => dispatch(updateTaskStatusTC(todolist.id, TaskId, {title: value}))
+        return (value: string) => dispatch(updateTaskStatusTC({todolistId: todolist.id, taskId: TaskId,model: {title: value}}))
     }, [dispatch, todolist.id])
 
     let newTasks = tasks;

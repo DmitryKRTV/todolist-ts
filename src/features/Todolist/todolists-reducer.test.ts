@@ -1,8 +1,8 @@
 import {v1} from "uuid";
 import {
     addTodolistAC, changeTodolistEntityStatusAC, changeTodolistFilterAC,
-    changeTodolistTitleAC, FilterValuesType,
-    removeTodolistAC, setTodolistsAC, TodoListDomainType,
+    changeTodolistTitleAC, fetchTodolists, FilterValuesType,
+    removeTodolistAC, TodoListDomainType,
     todolistsReducer
 } from "./todolists-reducer";
 import {TodolistType} from "../../api/todolist-api";
@@ -100,7 +100,7 @@ test("todolists should be set", () => {
         {id: todoListId2, title: "What to buy", order: 1, addedDate: ""},
     ];
 
-    const endState = todolistsReducer([],setTodolistsAC({todolists: todoLists}));
+    const endState = todolistsReducer([],fetchTodolists.fulfilled({todolists: todoLists}, "requesId"))
 
     expect(endState.length).toBe(2);
     expect(endState[1].filter).toBe("all");

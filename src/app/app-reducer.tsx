@@ -53,23 +53,6 @@ export const isInitializedApp = (): AppThunk => (dispatch) => {
         })
 }
 
-export const logOut = (): AppThunk => dispatch => {
-    authAPI.logout()
-        .then(res => {
-            if (res.data.resultCode === 0) {
-                dispatch(setIsLoggedInAC({value: false}))
-                dispatch(setAppStatus({status: "succeeded"}))
-            } else {
-                handleServerAppError(res.data, dispatch)
-            }
-            dispatch(setAppInitialized({initialized: true}))
-        })
-        .catch(error => {
-            handleServerNetworkError(error, dispatch)
-        })
-
-}
-
 // export const getData = (): AppThunk => dispatch => {
 //     instance1.post("/auth/login", {
 //         email: "dkorotayev3@gmail.com",

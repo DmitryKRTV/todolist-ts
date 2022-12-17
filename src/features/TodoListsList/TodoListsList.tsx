@@ -3,7 +3,7 @@ import {AppRootState} from "../../app/store";
 import {
     addTodolistsTC,
     changeTodolistTitleTC,
-    fetchTodolistsTC,
+    fetchTodolists,
     removeTodolistsTC,
     TodoListDomainType
 } from "../Todolist/todolists-reducer";
@@ -30,7 +30,7 @@ export const TodoListsList = (props: PropsType) => {
     useEffect(() => {
         if (demo || !isLoggedIn) return;
 
-        dispatch(fetchTodolistsTC())
+        dispatch(fetchTodolists())
     }, []);
 
     const removeTodoList = useCallback((todoListId: string) => {

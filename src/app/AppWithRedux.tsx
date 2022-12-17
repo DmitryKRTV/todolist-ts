@@ -6,9 +6,10 @@ import {Menu} from "@mui/icons-material";
 import {TodoListsList} from "../features/TodoListsList/TodoListsList";
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
 import {useAppDispatch, useAppSelector} from "./hooks";
-import {isInitializedApp, logOut, RequestStatusType} from "./app-reducer";
+import {isInitializedApp, RequestStatusType} from "./app-reducer";
 import {BrowserRouter, HashRouter, Navigate, Route, Routes} from "react-router-dom";
 import {Login} from "../features/Login/Login";
+import {logOut} from "../features/Login/login-reducer";
 
 type PropsType = {
     demo?: boolean

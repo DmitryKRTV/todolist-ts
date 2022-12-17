@@ -1,5 +1,5 @@
 import {tasksReducer} from "./Task/tasks-reducer";
-import {addTodolistAC, setTodolistsAC, TodoListDomainType, todolistsReducer} from "./todolists-reducer";
+import {addTodolistAC, TodoListDomainType, todolistsReducer} from "./todolists-reducer";
 import {TasksStateType} from "../../api/todolist-api";
 
 test("it's should me equals", () => {
@@ -22,16 +22,16 @@ test("it's should me equals", () => {
 
 })
 
-test("exmty tasks shpld be added", () => {
-
-    const todoLists = [
-        {id: "1", title: "What to learn", order: 0, addedDate: ""},
-        {id: "2", title: "What to buy", order: 1, addedDate: ""},
-    ];
-
-    const endTasksState = tasksReducer({}, setTodolistsAC({todolists: todoLists}));
-
-    expect(endTasksState["1"]).toStrictEqual([])
-    expect(endTasksState["2"]).toStrictEqual([])
-
-})
+// test("exmty tasks shpld be added", () => {
+//
+//     const todoLists = [
+//         {id: "1", title: "What to learn", order: 0, addedDate: ""},
+//         {id: "2", title: "What to buy", order: 1, addedDate: ""},
+//     ];
+//
+//     const endTasksState = tasksReducer({}, setTodolistsAC({todolists: todoLists}));
+//
+//     expect(endTasksState["1"]).toStrictEqual([])
+//     expect(endTasksState["2"]).toStrictEqual([])
+//
+// })

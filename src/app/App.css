@@ -1,13 +1,26 @@
-.progressBar {
-    position: absolute;
-    width: 100%;
-    height: 4px;
+/*
+.Application {
+  padding: 30px;
+  display: flex;
 }
 
-.progressBar-child {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+.Application > div {
+  margin-right: 50px;
 }
+
+.error {
+  border: red 1px solid;
+}
+
+.error-message {
+  color: red;
+}
+
+.active-filter {
+  background-color: aquamarine;
+}
+
+.is-done {
+  opacity: 0.5;
+}
+*/

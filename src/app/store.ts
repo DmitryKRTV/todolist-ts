@@ -4,15 +4,8 @@ import {appReducer} from '../features/Application'
 import {authReducer} from '../features/Auth'
 import {tasksReducer, todolistsReducer} from '../features/TodolistsList'
 import {configureStore} from '@reduxjs/toolkit'
+import {rootReducer} from "./reducers";
 
-// объединяя reducer-ы с помощью combineReducers,
-// мы задаём структуру нашего единственного объекта-состояния
-export const rootReducer = combineReducers({
-    app: appReducer,
-    auth: authReducer,
-    todolists: todolistsReducer,
-    tasks: tasksReducer
-})
 // непосредственно создаём store
 //export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
@@ -21,7 +14,13 @@ export const store = configureStore({
     middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(thunkMiddleware)
 })
 
+if (process.env.NODE_ENV === 'development' && module.hot) {
+    module.hot.accept('./reducers', () => {
+        store.replaceReducer(rootReducer)
+    })
+}
+
 // а это, чтобы можно было в консоли браузера обращаться к store в любой момент
 // @ts-ignore
-window.store = store
+// window.store = store
 

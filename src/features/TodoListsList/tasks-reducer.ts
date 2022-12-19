@@ -44,7 +44,7 @@ export const updateTask = createAsyncThunk('tasks/updateTask', async (param: { t
                                                                       thunkAPI) => {
     const state = thunkAPI.getState() as AppRootStateType
 
-    const task = state.tasks[param.todolistId].find(t => t.id === param.taskId)
+    const task = state.tasks[param.todolistId].find((t: any)  => t.id === param.taskId)
     if (!task) {
         return thunkAPI.rejectWithValue('task not found in the state')
     }
